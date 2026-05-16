@@ -72,13 +72,29 @@
 
     <!-- Mobile controls -->
     <div id="mobile-controls">
-      <div class="mobile-col">
-        <button class="mob-btn" id="mob-jump1" ontouchstart="mobileTouchStart('jump1')" ontouchend="mobileTouchEnd('jump1')">🦘 P1 Jump</button>
-        <button class="mob-btn" id="mob-fly1" ontouchstart="mobileTouchStart('fly1')" ontouchend="mobileTouchEnd('fly1')">🪽 P1 Fly</button>
+      <div class="mobile-col" id="mob-col1">
+        <button class="mob-btn mob-jump" id="mob-jump1"
+          ontouchstart="mobileTouchStart('jump1')" ontouchend="mobileTouchEnd('jump1')" ontouchcancel="mobileTouchEnd('jump1')">
+          <span class="mob-icon">🦘</span>
+          <span class="mob-label">Jump</span>
+        </button>
+        <button class="mob-btn mob-fly" id="mob-fly1"
+          ontouchstart="mobileTouchStart('fly1')" ontouchend="mobileTouchEnd('fly1')" ontouchcancel="mobileTouchEnd('fly1')">
+          <span class="mob-icon">🪽</span>
+          <span class="mob-label">Fly</span>
+        </button>
       </div>
       <div class="mobile-col" id="mob-col2" style="display:none">
-        <button class="mob-btn" id="mob-jump2" ontouchstart="mobileTouchStart('jump2')" ontouchend="mobileTouchEnd('jump2')">🦘 P2 Jump</button>
-        <button class="mob-btn" id="mob-fly2" ontouchstart="mobileTouchStart('fly2')" ontouchend="mobileTouchEnd('fly2')">🪽 P2 Fly</button>
+        <button class="mob-btn mob-jump" id="mob-jump2"
+          ontouchstart="mobileTouchStart('jump2')" ontouchend="mobileTouchEnd('jump2')" ontouchcancel="mobileTouchEnd('jump2')">
+          <span class="mob-icon">🦘</span>
+          <span class="mob-label">Jump</span>
+        </button>
+        <button class="mob-btn mob-fly" id="mob-fly2"
+          ontouchstart="mobileTouchStart('fly2')" ontouchend="mobileTouchEnd('fly2')" ontouchcancel="mobileTouchEnd('fly2')">
+          <span class="mob-icon">🪽</span>
+          <span class="mob-label">Fly</span>
+        </button>
       </div>
     </div>
 

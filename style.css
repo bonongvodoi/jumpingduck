@@ -260,26 +260,88 @@ body {
 /* ===== MOBILE CONTROLS ===== */
 #mobile-controls {
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   left: 0; right: 0;
   display: flex;
-  justify-content: space-around;
-  padding: 0 16px;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 18px calc(18px + env(safe-area-inset-bottom, 0px));
   z-index: 20;
   pointer-events: none;
 }
-.mobile-col { display: flex; gap: 10px; pointer-events: all; }
+
+/* Each player's column: buttons stacked vertically */
+.mobile-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: all;
+}
+
+/* Base button */
 .mob-btn {
   font-family: var(--font-main);
-  font-size: 0.9rem;
-  padding: 12px 18px;
-  background: rgba(255,255,255,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: 72px;
+  height: 72px;
   border: none;
-  border-radius: 14px;
+  border-radius: 20px;
   cursor: pointer;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 0 rgba(0,0,0,0.25);
   touch-action: none;
   user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.08s, box-shadow 0.08s, filter 0.08s;
+  backdrop-filter: blur(4px);
+}
+.mob-btn:active {
+  transform: translateY(4px) scale(0.94);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.25);
+  filter: brightness(1.12);
+}
+
+/* Jump: spring green */
+.mob-jump {
+  background: linear-gradient(145deg, #A8F0A8, #5DC95D);
+  color: #1a4a00;
+}
+/* Fly: sky blue-purple */
+.mob-fly {
+  background: linear-gradient(145deg, #B8D4FF, #7A9EF5);
+  color: #0a1a50;
+}
+
+.mob-icon {
+  font-size: 1.9rem;
+  line-height: 1;
+}
+.mob-label {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.80;
+}
+
+/* ── iPad / large touch screen (≥ 600px) ── */
+@media (pointer: coarse) and (min-width: 600px) {
+  #mobile-controls {
+    padding: 0 28px calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  .mobile-col { gap: 16px; }
+  .mob-btn {
+    width: 108px;
+    height: 108px;
+    border-radius: 26px;
+    box-shadow: 0 7px 0 rgba(0,0,0,0.25);
+  }
+  .mob-btn:active { transform: translateY(6px) scale(0.93); box-shadow: 0 1px 0 rgba(0,0,0,0.25); }
+  .mob-icon  { font-size: 2.8rem; }
+  .mob-label { font-size: 0.78rem; }
 }
 
 /* ===== WIN SCREEN ===== */
