@@ -258,90 +258,122 @@ body {
 }
 
 /* ===== MOBILE CONTROLS ===== */
+/*
+ * Layout: one pill-shaped glass bar at the very bottom centre.
+ * 1-player: [Jump] [Fly]
+ * 2-player: [P1 Jump] [P1 Fly]   [P2 Jump] [P2 Fly]
+ * Columns are separated by a hairline divider.
+ * Buttons are horizontal so they only take one thin strip of screen.
+ */
 #mobile-controls {
   position: fixed;
   bottom: 0;
   left: 0; right: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 0 18px calc(18px + env(safe-area-inset-bottom, 0px));
+  justify-content: center;
+  align-items: center;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   z-index: 20;
   pointer-events: none;
 }
 
-/* Each player's column: buttons stacked vertically */
-.mobile-col {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  pointer-events: all;
+/* The frosted glass pill that holds all buttons */
+#mobile-controls::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(28px) saturate(1.8);
+  -webkit-backdrop-filter: blur(28px) saturate(1.8);
+  border-top: 1px solid rgba(255,255,255,0.45);
+  box-shadow: 0 -4px 32px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+  pointer-events: none;
 }
 
-/* Base button */
+/* Each player's button group — horizontal row */
+.mobile-col {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  padding: 8px 10px;
+  pointer-events: all;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hairline divider between P1 and P2 groups */
+.mobile-col + .mobile-col::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 20%; height: 60%;
+  width: 1px;
+  background: rgba(255,255,255,0.45);
+}
+
+/* ── Glass button base ── */
 .mob-btn {
   font-family: var(--font-main);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  width: 72px;
-  height: 72px;
+  gap: 6px;
+  height: 52px;
+  padding: 0 18px;
   border: none;
-  border-radius: 20px;
+  border-radius: 14px;
   cursor: pointer;
-  box-shadow: 0 5px 0 rgba(0,0,0,0.25);
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
-  transition: transform 0.08s, box-shadow 0.08s, filter 0.08s;
-  backdrop-filter: blur(4px);
+  transition: transform 0.08s, opacity 0.08s;
+  /* Glass fill */
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(16px) saturate(1.6);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+  /* Bright top edge + subtle bottom shadow */
+  border: 1px solid rgba(255,255,255,0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.75),
+    inset 0 -1px 0 rgba(0,0,0,0.06),
+    0 2px 12px rgba(0,0,0,0.14);
 }
 .mob-btn:active {
-  transform: translateY(4px) scale(0.94);
-  box-shadow: 0 1px 0 rgba(0,0,0,0.25);
-  filter: brightness(1.12);
+  transform: scale(0.93);
+  opacity: 0.82;
 }
 
-/* Jump: spring green */
+/* Tinted glass tones — subtle, not opaque */
 .mob-jump {
-  background: linear-gradient(145deg, #A8F0A8, #5DC95D);
-  color: #1a4a00;
+  background: rgba(120, 230, 120, 0.28);
+  border-color: rgba(180,255,180,0.55);
+  color: #0d3300;
 }
-/* Fly: sky blue-purple */
 .mob-fly {
-  background: linear-gradient(145deg, #B8D4FF, #7A9EF5);
-  color: #0a1a50;
+  background: rgba(130, 180, 255, 0.28);
+  border-color: rgba(180,210,255,0.55);
+  color: #001440;
 }
 
 .mob-icon {
-  font-size: 1.9rem;
+  font-size: 1.5rem;
   line-height: 1;
 }
 .mob-label {
-  font-size: 0.64rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  opacity: 0.80;
+  opacity: 0.85;
+  white-space: nowrap;
 }
 
-/* ── iPad / large touch screen (≥ 600px) ── */
+/* ── iPad (≥ 600px coarse pointer) — slightly taller buttons ── */
 @media (pointer: coarse) and (min-width: 600px) {
-  #mobile-controls {
-    padding: 0 28px calc(24px + env(safe-area-inset-bottom, 0px));
-  }
-  .mobile-col { gap: 16px; }
-  .mob-btn {
-    width: 108px;
-    height: 108px;
-    border-radius: 26px;
-    box-shadow: 0 7px 0 rgba(0,0,0,0.25);
-  }
-  .mob-btn:active { transform: translateY(6px) scale(0.93); box-shadow: 0 1px 0 rgba(0,0,0,0.25); }
-  .mob-icon  { font-size: 2.8rem; }
-  .mob-label { font-size: 0.78rem; }
+  .mobile-col { gap: 8px; padding: 10px 16px; }
+  .mob-btn { height: 64px; padding: 0 26px; border-radius: 18px; }
+  .mob-icon  { font-size: 1.9rem; }
+  .mob-label { font-size: 0.82rem; }
 }
 
 /* ===== WIN SCREEN ===== */
