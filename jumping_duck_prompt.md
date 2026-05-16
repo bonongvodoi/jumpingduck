@@ -1,6 +1,6 @@
 # Jumping Duck — Game Build Prompt for Claude
 
-> **Updated: May 2026 — v2 requirements incorporated**
+> **Updated: May 2026 — v3 requirements incorporated**
 
 You are a senior indie game developer and creative front-end engineer.
 
@@ -17,6 +17,55 @@ Keep everything lightweight, beginner-friendly, and easy to run locally.
 The final output should be a small project with clean structure and readable code.
 
 ---
+
+## v3 Change Log & Requirements
+
+### Player Characters
+- **Player 1** = Cute **Rabbit** girl: long upright bunny ears with pink inner ear, round chibi face, pink bow on ear, bunny T-split nose and mouth, pink dress
+- **Player 2** = Cute **Cat** girl: triangular cat ears with inner fill, whiskers (3 per side), vertical slit pupils, triangle nose, cat "v" mouth, blue dress
+- Both have: big anime chibi eyes with pupils/shine, pink cheeks, color dress with skirt flare, running legs, swinging arms, shoes
+- White silhouette glow applied before drawing each character to separate from background
+
+### Fly Mechanic (Tap-Based — IMPORTANT)
+- Fly is **tap / press-and-release** — each single press gives one upward velocity burst
+- Player 1 fly = `W` key (tap, not hold)
+- Player 2 fly = `Enter` key (tap, not hold)
+- **NOT hold-to-fly**: Holding does nothing extra; each individual keydown event triggers one flap
+- Each flap: gives upward burst velocity (`vy = FLY_BURST`)  
+- If on ground: gentle takeoff burst (FLY_BURST * 0.75) then airborne
+- Driven by `flyRequest` flag set on `keydown`, consumed once per frame
+- Gravity always pulls player down after each flap
+
+### Flying Animation — White Feather Wings
+- Wings are visible whenever the player is **airborne** (not on ground)
+- Two white angel/feather wings drawn with bezier curves on each side of the body
+- Feather vein detail lines drawn on each wing
+- Flap animation: sine wave oscillation
+- When `wingFlapTick > 0` (just tapped fly): energetic fast flap; otherwise gentle idle oscillation
+- Wing sparkle particles emitted during wing flap
+
+### Invisible Ceiling
+- Hard ceiling at **12% from the top of the screen** (`y = H * 0.12`)
+- Players cannot fly above this line
+- When hitting ceiling: `vy` clamped to 0 (no bouncing)
+- A subtle dashed white line visually hints at the ceiling boundary
+
+### Controls (Updated)
+| Action | Player 1 | Player 2 |
+|--------|----------|----------|
+| Jump   | SPACE    | ↑ Arrow  |
+| Fly    | W (tap)  | ENTER (tap) |
+
+### Visual Separation (Background vs Foreground)
+- Background layers use `globalAlpha` to appear "behind":
+  - Clouds: 72%–100% alpha (sky phase dependent)
+  - Hills (mid layer): 70% alpha
+  - Buildings (near layer): 88% alpha
+- **Obstacles**: rendered with canvas `shadowColor` drop shadow (dark, offset 3,4) to lift them off the ground
+- **Players**: rendered with white `shadowBlur=18` glow so they pop in front of all backgrounds
+- **Ground**: solid bright gradient with a clear horizon line + dashed stripe
+- **Ceiling hint**: subtle dashed white line at ceiling boundary
+
 
 ## v2 Change Log & Requirements
 
