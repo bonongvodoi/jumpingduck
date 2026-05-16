@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jumping Duck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== MAIN MENU ===== -->
+  <div id="menu-screen" class="screen active">
+    <div class="menu-bg-ducks" id="menuDucks"></div>
+
+    <div class="menu-container">
+      <div class="title-block">
+        <div id="title-letters" class="title-letters"></div>
+        <div class="title-sub">🐥 The Endless Duck Chase 🐥</div>
+      </div>
+
+      <div class="mode-buttons">
+        <button class="btn btn-yellow" id="btn1p">🧒 1 Player</button>
+        <button class="btn btn-pink" id="btn2p">👫 2 Players</button>
+      </div>
+
+      <div id="name-form" class="name-form hidden">
+        <div class="input-group" id="p1-group">
+          <label>Player 1 Name</label>
+          <input type="text" id="p1name" maxlength="12" placeholder="Enter name..." />
+        </div>
+        <div class="input-group hidden" id="p2-group">
+          <label>Player 2 Name</label>
+          <input type="text" id="p2name" maxlength="12" placeholder="Enter name..." />
+        </div>
+        <button class="btn btn-green" id="btn-start">🎮 Let's Go!</button>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="leaderboard-panel">
+        <h3>🏆 High Scores</h3>
+        <div id="leaderboard-list"></div>
+      </div>
+    </div>
+
+    <div class="controls-hint">
+      <span>P1: SPACE jump · W fly</span>
+      <span style="margin-left:20px">P2: ↑ jump · SHIFT fly</span>
+    </div>
+  </div>
+
+  <!-- ===== GAME SCREEN ===== -->
+  <div id="game-screen" class="screen">
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- HUD -->
+    <div id="hud">
+      <div class="hud-player" id="hud-p1">
+        <span class="hud-name" id="hud-p1-name">P1</span>
+        <span class="hud-ducks">🦆 <span id="hud-p1-ducks">0</span></span>
+      </div>
+      <div class="hud-center">
+        <div id="hud-timer" class="hud-timer">⏱ 0</div>
+        <div id="hud-scene" class="hud-scene"></div>
+      </div>
+      <div class="hud-player hud-right" id="hud-p2" style="display:none">
+        <span class="hud-name" id="hud-p2-name">P2</span>
+        <span class="hud-ducks">🦆 <span id="hud-p2-ducks">0</span></span>
+      </div>
+    </div>
+
+    <!-- Mobile controls -->
+    <div id="mobile-controls">
+      <div class="mobile-col">
+        <button class="mob-btn" id="mob-jump1" ontouchstart="mobileTouchStart('jump1')" ontouchend="mobileTouchEnd('jump1')">🦘 P1 Jump</button>
+        <button class="mob-btn" id="mob-fly1" ontouchstart="mobileTouchStart('fly1')" ontouchend="mobileTouchEnd('fly1')">🪽 P1 Fly</button>
+      </div>
+      <div class="mobile-col" id="mob-col2" style="display:none">
+        <button class="mob-btn" id="mob-jump2" ontouchstart="mobileTouchStart('jump2')" ontouchend="mobileTouchEnd('jump2')">🦘 P2 Jump</button>
+        <button class="mob-btn" id="mob-fly2" ontouchstart="mobileTouchStart('fly2')" ontouchend="mobileTouchEnd('fly2')">🪽 P2 Fly</button>
+      </div>
+    </div>
+
+    <button id="btn-mute" title="Mute">🔊</button>
+  </div>
+
+  <!-- ===== WIN SCREEN ===== -->
+  <div id="win-screen" class="screen">
+    <div class="win-content">
+      <div id="win-title" class="win-title">🎉 YOU SURVIVED! 🎉</div>
+      <div id="win-subs" class="win-subs"></div>
+      <canvas id="confettiCanvas"></canvas>
+
+      <!-- Gift box -->
+      <div id="gift-area" class="gift-area">
+        <div id="gift-box" class="gift-box" onclick="openGift()">
+          <div class="gift-lid">🎁</div>
+          <div class="gift-label">Click to Open!</div>
+        </div>
+        <div id="reward-display" class="reward-display hidden"></div>
+      </div>
+
+      <button class="btn btn-yellow" onclick="goMenu()" id="btn-menu-again">🏠 Main Menu</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
